@@ -2,8 +2,11 @@ package com.example.berna.seccion3;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Toast;
 
 import com.example.berna.seccion3.Adapters.MyAdapter;
@@ -23,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
         rv_main = (RecyclerView) findViewById(R.id.rv_main);
 
         names = this.getAllNames();
+        //Tipos de diseño
         layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager = new GridLayoutManager(getApplicationContext(),3);
+        layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
 
         MyAdapter myAdapter = new MyAdapter(names, R.layout.recicler_item, new MyAdapter.onItemClickListener() {
             @Override
@@ -31,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 message(name+" - "+position);
             }
         });
+        rv_main.setHasFixedSize(true);
+        rv_main.setItemAnimator(new DefaultItemAnimator());
         rv_main.setLayoutManager(layoutManager);
         rv_main.setAdapter(myAdapter);
     }
